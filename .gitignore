@@ -57,6 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 
+/logs/
 /www/html/*
 !/www/html/.gitkeep
 runtime
