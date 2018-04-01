@@ -1,46 +1,13 @@
 {% extends "layout.html" %}
 
-{% block title %}列表 - {{ config.pkg.name }}{% endblock %}
+{% block title %}主页 - {{ config.pkg.name }}{% endblock %}
 
 {% block content %}
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">文件名</th>
-        <th scope="col">链接</th>
-        <th scope="col">操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in items %}
-        <tr>
-          <td>{{ item.filename }}</td>
-          <td>
-              <a href="{{ item.url | unix }}" target="_blank">源站</a></button> | <a href="{{ item.mip | unix }}" target="_blank">MIP-Cache</a></button>
-          </td>
-          <td>
-              <div class="modal fade" id="deleteModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="删除提示" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      <p>删除后不能恢复。</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                      <button class="btn btn-danger" onclick="location.href = '/api/delete?filename={{ item.filename }}'">继续</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button type="button" onclick="location.href = '/editor.html?filename={{ item.filename }}'" class="btn btn-sm btn-success">编辑</button>
-              <button type="button" data-toggle="modal" data-target="#deleteModal{{ loop.index }}" class="btn btn-sm btn-danger">删除</button>
-          </td>
-        </tr>
-      {% else %}
-      <tr>
-        <td colspan="3" class="text-center">没有静态文件。</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <p>
+        hi，{{ token }} （你的授权码），这是一个方便线上直接管理静态文件的功能，希望对你有所帮助。你还可以：
+    </p>
+    <ul>
+        <li><a href="https://github.com/xuexb/admin.static.xuexb.com/issues/new">反馈问题、提交建议</a></li>
+        <li><a href="/api/logout">退出授权</a></li>
+    </ul>
 {% endblock %}

@@ -6,5 +6,6 @@ module.exports = Object.assign({}, {
 }, {
     workers: 1,
     port: 8021,
-    htmlDir: path.join(think.ROOT_PATH, 'www/html')
+    htmlDir: path.join(think.ROOT_PATH, 'www/html'),
+    token: '*'
 });

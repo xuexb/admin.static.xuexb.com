@@ -20,6 +20,16 @@ module.exports = class extends think.Controller {
      * 前置操作，处理用户登录状态、显示信息
      */
     async __before() {
+        // 检查授权
+        const token = await this.session('token');
+        if (['login'].indexOf(this.ctx.action) == -1 && !token) {
+            this.showMsg('请先登录', `/login.html?ref=${encodeURIComponent(this.ctx.url)}`);
+        }
+        this.token = token;
+        this.assign({
+            token
+        });
+
         // 处理显示信息
         const msg = decodeURIComponent(this.cookie(MSG_COOKIE_KEY) || '');
         if (msg) {

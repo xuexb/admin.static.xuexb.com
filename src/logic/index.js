@@ -29,4 +29,19 @@ module.exports = class extends Base {
             return this.showMsg();
         }
     }
+
+    loginAction() {
+        if (!this.isPost) {
+            return;
+        }
+        const rules = {
+            token: {
+                required: true
+            }
+        };
+
+        if (!this.validate(rules)) {
+            return this.showMsg();
+        }
+    }
 };
