@@ -1,0 +1,40 @@
+{
+  "name": "admin.static.xuexb.com",
+  "description": "在线  MIP 和 AMP 静态文件管理",
+  "version": "1.0.0",
+  "author": "xuexb <fe.xiaowu@gmail.com>",
+  "scripts": {
+    "start": "node development.js"
+  },
+  "dependencies": {
+    "think-cache": "^1.0.0",
+    "think-session": "^1.0.0",
+    "think-cache-file": "^1.0.8",
+    "think-model": "^1.0.0",
+    "think-session-file": "^1.0.5",
+    "think-view": "^1.0.0",
+    "think-view-nunjucks": "^1.0.1",
+    "think-model-mysql": "^1.0.0",
+    "think-logger3": "^1.0.0",
+    "thinkjs": "^3.0.0"
+  },
+  "devDependencies": {
+    "think-watcher": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuexb/admin.static.xuexb.com.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=7.8.0"
+  },
+  "main": "development.js",
+  "keywords": [
+    "MIP"
+  ],
+  "bugs": {
+    "url": "https://github.com/xuexb/admin.static.xuexb.com/issues"
+  },
+  "homepage": "https://github.com/xuexb/admin.static.xuexb.com#readme"
+}

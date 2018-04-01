@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+
+{% block title %}{% if isEditor %}编辑{% else %}新增{% endif %} - {{ config.pkg.name }}{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <div class="form-group">
+      <label for="filename">文件名</label>
+      <input type="text" class="form-control" id="filename" name="filename" pattern=".+\.html$" required autocomplete="off" value="{{ filename }}" {% if isEditor %} readonly {% endif %}>
+      <small id="passwordHelpBlock" class="form-text text-muted">
+        名称最好语义化些，必须以 <code>.html</code> 结尾，同名文件将直接覆盖。新增文件将自动随机一个文件名。
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="content">内容</label>
+      <textarea class="form-control" id="content" name="content">{{ content }}</textarea>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">保存</button>
+    </div>
+  </form>
+{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="https://cdn.bootcss.com/codemirror/5.35.0/codemirror.css">
+  <style>
+    #content,
+    .CodeMirror {
+      height: 700px;
+    }
+    .CodeMirror {
+      border: 1px solid  #ccc;
+    }
+    .CodeMirror pre > * {
+    text-indent: 0;
+    }
+
+    /*lint*/
+    .lint-error {
+    padding: 2px 5px 3px;
+    background-color: #ffa;
+    }
+    .lint-error-icon {
+    margin-right: 7px;
+    padding: 0 3px;
+    font-weight: bold;
+    color: white;
+    border-radius: 50%;
+    background-color: red;
+    }
+    .lint-error-icon.warning {
+    background-color: #09f;
+    }
+    .lint-error-more {
+    margin-left: 10px;
+    display: inline-block;
+    }
+  </style>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/mip-validator/dist/mip-validator.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.35.0/codemirror.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.35.0/addon/edit/closetag.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.35.0/addon/fold/xml-fold.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.35.0/mode/xml/xml.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.35.0/mode/javascript/javascript.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.35.0/mode/css/css.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.35.0/mode/htmlmixed/htmlmixed.js"></script>
+  <script>
+    var validator = window.MIPValidator();
+
+    var editor = CodeMirror.fromTextArea(document.getElementById('content'), {
+        lineNumbers: true,
+        lineWrapping: true,
+        mode: 'text/html',
+        autoCloseTags: true,
+        indentUnit: 4
+    });
+
+    var delay;
+    editor.on('change', function () {
+        clearTimeout(delay);
+        delay = setTimeout(checkValidate, 300);
+    });
+    var widgets = [];
+    function checkValidate() {
+        editor.operation(function () {
+            for (var i = 0; i < widgets.length; ++i) {
+                editor.removeLineWidget(widgets[i]);
+            }
+            widgets.length = 0;
+
+            // mip-validator
+            (function () {
+                var errors = validator.validate(editor.getValue());
+
+                for (var i = 0; i < errors.length; ++i) {
+                    var err = errors[i];
+                    if (!err || !err.message) {
+                        continue;
+                    }
+
+                    if (err.line === 0) {
+                        err.line = 1;
+                    }
+
+                    var $tip = $('<div />').addClass('lint-error');
+                    var $icon = $('<span />').addClass('lint-error-icon ' + (err.type || '')).text('!');
+                    var $text = $('<span />').addClass('lint-error-text').text(err.message);
+
+                    $tip.append($icon).append($text);
+
+                    widgets.push(editor.addLineWidget(err.line - 1, $tip.get(0), {
+                        coverGutter: false,
+                        noHScroll: true
+                    }));
+                }
+            })();
+        });
+        var info = editor.getScrollInfo();
+        var after = editor.charCoords({line: editor.getCursor().line + 1, ch: 0}, 'local').top;
+        if (info.top + info.clientHeight < after) {
+            editor.scrollTo(null, after - info.clientHeight + 3);
+        }
+    }
+    setTimeout(checkValidate, 300);
+  </script>
+{% endblock %}
