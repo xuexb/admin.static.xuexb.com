@@ -32,8 +32,11 @@ module.exports = class extends think.Logic {
             this.cookie(MSG_COOKIE_KEY, encodeURIComponent(JSON.stringify(data)));
             return this.redirect(url || this.ctx.url);
         }
+        else if (this.isGet) {
+            this.cookie(MSG_COOKIE_KEY, encodeURIComponent(JSON.stringify(data)));
+            return this.redirect('/');
+        }
 
-        this.assign(MSG_TPL_KEY, data);
         return this.display();
     }
 };

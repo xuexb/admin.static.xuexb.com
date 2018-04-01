@@ -43,6 +43,12 @@ module.exports = class extends Base {
         return this.display();
     }
 
+    /**
+     * 编辑
+     *
+     * @param {string} filename 文件名
+     * @return {Object}
+     */
     async deleteAction() {
         const filename = this.get('filename');
         const filepath = this.getFilePath(filename);
@@ -52,6 +58,13 @@ module.exports = class extends Base {
         return this.showMsg('删除成功', '/');
     }
 
+    /**
+     * 编辑
+     *
+     * @param {string} filename 文件名
+     * @param {string} content 文件内容
+     * @return {Object}
+     */
     async editorAction() {
         if (this.isPost) {
             const {filename, content} = this.post();
@@ -65,7 +78,10 @@ module.exports = class extends Base {
         const filepath = isEditor ? this.getFilePath(filename) : path.join(think.ROOT_PATH, 'view/default.html');
 
         if (!think.isFile(filepath)) {
-            return this.showMsg(isEditor ? '文件不存在' : '新增文件出错', '/');
+            return this.showMsg({
+                text: isEditor ? '文件不存在' : '新增文件出错',
+                type: 'danger'
+            }, '/');
         }
 
         const content = fs.readFileSync(filepath).toString();
