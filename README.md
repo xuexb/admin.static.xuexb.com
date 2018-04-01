@@ -1,5 +1,7 @@
 # [admin.static.xuexb.com](https://admin.static.xuexb.com)
 
+![node version required](https://img.shields.io/badge/node-%3E=7.8.0-red.svg)
+
 在线  MIP 和 AMP 静态文件管理
 
 ## 本地开发
