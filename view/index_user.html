@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}用户中心 - 静态文件管理{% endblock %}
+
+{% block content %}
+    <p>
+        hi，{{ token }} （你的授权码），这是一个方便线上直接管理静态文件的功能，希望对你有所帮助。你还可以：
+    </p>
+    <ul>
+        <li><a href="https://github.com/xuexb/admin.static.xuexb.com/issues/new">反馈问题、提交建议</a></li>
+        <li><a href="/editor.html">创建文件</a></li>
+        <li><a href="/api/logout">退出授权</a></li>
+    </ul>
+{% endblock %}

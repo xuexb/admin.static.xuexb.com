@@ -1,24 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">
-    <img src="https://static.cdn.xuexb.com/image/logo.jpg?imageslim" width="30" height="30" class="d-inline-block align-top" alt="LOGO">
-    静态文件管理
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/list">列表</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/editor.html">新增</a>
-      </li>
-      <li class="nav-item">
-          <a href="https://github.com/xuexb/admin.static.xuexb.com" class="nav-link">
-              源码<span class="badge badge-pill badge-danger ml-1">New</span>
-          </a>
-      </li>
-    </ul>
-  </div>
+    <a class="navbar-brand" href="/"> <img src="https://static.cdn.xuexb.com/image/logo.jpg?imageslim" width="30" height="30" class="d-inline-block align-top" alt="LOGO">
+        静态文件管理
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">主页</a>
+            </li>
+            <li class="nav-item">
+                <a href="https://github.com/xuexb/admin.static.xuexb.com" class="nav-link">源码</a>
+            </li>
+            {% if token %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">帐户</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/user.html">个人中心</a>
+                    <a class="dropdown-item" href="/list.html">文件列表</a>
+                    <a class="dropdown-item" href="/editor.html">新增文件</a>
+                    <a class="dropdown-item" href="/api/logout">退出</a>
+                </div>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
 </nav>

@@ -85,6 +85,20 @@ module.exports = class extends Base {
         return this.display();
     }
 
+    /**
+     * 个人中心
+     *
+     * @return {Object}
+     */
+    async userAction() {
+        return this.display();
+    }
+
+    /**
+     * 退出
+     *
+     * @return {Object}
+     */
     async logoutAction (){
         await this.session('token', null);
         return this.showMsg('退出成功', '/login.html');

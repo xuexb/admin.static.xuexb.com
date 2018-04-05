@@ -22,7 +22,7 @@ module.exports = class extends think.Controller {
     async __before() {
         // 检查授权
         const token = await this.session('token');
-        if (['login'].indexOf(this.ctx.action) == -1 && !token) {
+        if (['login', 'index'].indexOf(this.ctx.action) == -1 && !token) {
            return this.showMsg('请先登录', `/login.html?ref=${encodeURIComponent(this.ctx.url)}`);
         }
         this.token = token;

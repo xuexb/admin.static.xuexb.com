@@ -1,4 +1,5 @@
 module.exports = [
+    ['/user', 'index/user'],
     ['/list', 'index/list'],
     ['/login', 'index/login'],
     ['/editor', 'index/editor'],
