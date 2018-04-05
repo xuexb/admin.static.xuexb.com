@@ -62,3 +62,4 @@ typings/
 !/www/html/.gitkeep
 runtime
 *.production.js
+/token.json

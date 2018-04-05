@@ -5,6 +5,26 @@ const Base = require('./base.js');
 module.exports = class extends Base {
 
     /**
+     * 获取授权码
+     *
+     * @return {Array|string} 默认为*
+     */
+    getTokens() {
+        let tokens = '*';
+
+        try {
+            const filepath = path.join(think.ROOT_PATH, 'token.json');
+            delete require.cache[filepath];
+            tokens = require(filepath);
+        }
+        catch (e) {
+            think.logger.error(new Error(e));
+        }
+
+        return tokens;
+    }
+
+    /**
      * 登录授权
      *
      * @return {Object}
@@ -12,10 +32,11 @@ module.exports = class extends Base {
     async loginAction() {
         if (this.isPost) {
             const {token} = this.post();
-            const list = this.config('token');
+            const list = this.getTokens();
 
             // 检查授权码
             if (list !== '*' && list.indexOf(token) === -1) {
+                think.logger.warn(`注入：${token}`);
                 return this.showMsg({
                     text: '授权码错误',
                     type: 'danger'
@@ -24,7 +45,7 @@ module.exports = class extends Base {
 
             // 写入状态
             await this.session('token', token);
-
+            think.logger.info(`授权成功：${token}`);
             return this.showMsg('授权成功', this.ctx.query.ref || '/');
         }
         return this.display();
