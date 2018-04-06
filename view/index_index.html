@@ -51,7 +51,11 @@
             </li>
         </ul>
         <p class="lead">
-            <a class="btn btn-primary" href="/login.html" role="button">登录</a>
+            {% if token %}
+                <a class="btn btn-primary" href="/list.html" role="button">使用</a>
+            {% else %}
+                <a class="btn btn-primary" href="/login.html" role="button">登录</a>
+            {% endif %}
         </p>
     </div>
 {% endblock %}
